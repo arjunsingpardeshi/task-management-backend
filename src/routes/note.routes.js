@@ -1,19 +1,19 @@
 import { Router } from "express";
-import { validateProjectPermission } from "../middlewares/authentication.middleware";
-import { AvailableUserRoles, UserRolesEnum } from "../utils/constant";
-import { createNote, deleteNote, getNoteById, getNotes, updateNote } from "../controllers/note.controllers";
+import { isLoggedIn, validateProjectPermission } from "../middlewares/authentication.middleware.js";
+import { AvailableUserRoles, UserRolesEnum } from "../utils/constant.js";
+import { createNote, deleteNote, getNoteById, getNotes, updateNote } from "../controllers/note.controllers.js";
 
 const router = Router()
 
 router.route("/:projectId")
-      .get(validateProjectPermission(AvailableUserRoles), getNotes)
-      .post(validateProjectPermission([UserRolesEnum.ADMIN]), createNote)
+      .get(isLoggedIn, validateProjectPermission(AvailableUserRoles), getNotes)
+      .post(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), createNote)
 
 
 router.route("/:projectId/n/noteId")
-      .get(validateProjectPermission(AvailableUserRoles), getNoteById)
-      .put(validateProjectPermission([UserRolesEnum.ADMIN]), updateNote)
-      .delete(validateProjectPermission([UserRolesEnum.ADMIN]), deleteNote)
+      .get(isLoggedIn, validateProjectPermission(AvailableUserRoles), getNoteById)
+      .put(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), updateNote)
+      .delete(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), deleteNote)
 
 
 export default router

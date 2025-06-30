@@ -7,7 +7,9 @@ const app = express();
 
 import healthCheckRouter from "./routes/healthcheck.routes.js"
 import authenticationRouter from "./routes/auth.routes.js"
-
+import noteRouter from "./routes/note.routes.js"
+import projectRouter from "./routes/project.routes.js"
+import taskRouter from "./routes/task.routes.js"
 app.use(cors({
 
     origin: process.env.BASE_URI,
@@ -19,10 +21,11 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-app.use("/api/v1/healthcheck",healthCheckRouter)
-console.log("inside app");
-
-app.use("/api/v1/auth",authenticationRouter)
+app.use("/api/v1/healthcheck", healthCheckRouter)
+app.use("/api/v1/auth", authenticationRouter)
+app.use("/api/v1/note", noteRouter)
+app.use("/api/v1/project", projectRouter)
+app.use("/api/v1/task", taskRouter)
 
 
 export default  app

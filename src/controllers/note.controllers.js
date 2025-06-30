@@ -18,12 +18,12 @@ const getNotes = asyncHandler (async (req, res) => {
 
   const notes = await ProjectNote.find({
     project: new mongoose.Types.ObjectId(projectId)
-  }).populate("createdBy", "username fullName avatar")
+  }).populate("createdBy", "username fullname avatar")
 
   // if(!notes.length===0){
   //   throw new ApiError(404, "notes not found")
   // }
-  res.status(200).json(new ApiResponse(200, notes, "All notes for project is fetch successfully"))
+  return res.status(200).json(new ApiResponse(200, notes, "All notes for project is fetch successfully"))
 });
 
 const getNoteById =   asyncHandler (async (req, res) => {
@@ -32,12 +32,12 @@ const getNoteById =   asyncHandler (async (req, res) => {
   if(!noteId){
     throw new ApiError(400, "invalid note id")
   }  
-  const note = await ProjectNote.findById(noteId).populate("createdBy", "username fullName avatar");
+  const note = await ProjectNote.findById(noteId).populate("createdBy", "username fullname avatar");
 
   if(!note){
       throw new ApiError(404, "note not found")
   }
-  res.status(200).json(new ApiResponse(200, note, "note fetch successfully"))
+  return res.status(200).json(new ApiResponse(200, note, "note fetch successfully"))
 });
 
 const createNote = asyncHandler ( async (req, res) => {
@@ -63,7 +63,7 @@ const createNote = asyncHandler ( async (req, res) => {
   const populatedNote = await ProjectNote.findById(newNote._id)
   .populate("createdBy", "username fullName avatar")
 
-    res.status(200).json(new ApiResponse(201, populatedNote, "note created successfully"))
+   return res.status(200).json(new ApiResponse(201, populatedNote, "note created successfully"))
 
 });
 
@@ -85,10 +85,10 @@ const updateNote = asyncHandler ( async (req, res) => {
     noteId,
     {content},
     {new: true}
-    ).populate("createdBy", "username fullName avatar")
+    ).populate("createdBy", "username fullname avatar")
   
 
-  res.status(200).json(new ApiResponse(200, updatedNote, "note update successfull"))
+  return res.status(200).json(new ApiResponse(200, updatedNote, "note update successfull"))
 });
 
 const deleteNote = asyncHandler ( async (req, res) => {
@@ -105,7 +105,7 @@ const deleteNote = asyncHandler ( async (req, res) => {
    throw new ApiError(401, "note not deleted")
   }
 
-  res.status(200).json(new ApiResponse(200, deleteNote, "note deleted successfull"))
+  return res.status(200).json(new ApiResponse(200, deleteNote, "note deleted successfull"))
 });
 
 export { createNote, deleteNote, getNoteById, getNotes, updateNote };
