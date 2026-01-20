@@ -10,7 +10,7 @@ router.route("/:projectId")
       .post(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), createNote)
 
 
-router.route("/:projectId/n/noteId")
+router.route("/:projectId/n/:noteId")
       .get(isLoggedIn, validateProjectPermission(AvailableUserRoles), getNoteById)
       .put(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), updateNote)
       .delete(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), deleteNote)

@@ -11,9 +11,8 @@ const subtaskSchema = new Schema({
         required: true
     },
     isCompleted: {
-        
         type: Boolean,
-        default: true
+        default: false
     },
     createdBy: {
         type: Schema.Types.ObjectId,

@@ -48,7 +48,7 @@ export const validateProjectPermission = (roles = []) => asyncHandler(async (req
     }
 
     const givenRole = project?.role;    
-    req.use.role = givenRole;
+    req.user.role = givenRole;
 
     if(!roles.includes(givenRole)){
         throw new ApiError(403, "you do not have permission to perform this action")

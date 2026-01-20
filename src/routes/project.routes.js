@@ -1,15 +1,17 @@
 import { Router } from "express";
 import { isLoggedIn, validateProjectPermission } from "../middlewares/authentication.middleware.js";
 import {addMemberToProject, createProject, deleteMember, deleteProject, getProjectById, getProjectMembers, getProjects, updateMemberRole, updateProject } from "../controllers/project.controllers.js";
-import { UserRolesEnum } from "../utils/constant.js";
+import { AvailableUserRoles, UserRolesEnum } from "../utils/constant.js";
 
 const router = Router()
 
-router.route("/get-all-projects").get(isLoggedIn, getProjects)
+router.route("/get-projects").get(isLoggedIn, getProjects)
+
+router.route("/create-project")
+.post(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), createProject)
 
 router.route("/:projectId")
 .get(isLoggedIn, validateProjectPermission(AvailableUserRoles), getProjectById)
-.post(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), createProject)
 .patch(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), updateProject)
 .delete(isLoggedIn, validateProjectPermission([UserRolesEnum.ADMIN]), deleteProject)
 
